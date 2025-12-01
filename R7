@@ -1,0 +1,25 @@
+enable
+configure terminal
+
+! Interfaces vers PC
+interface e0/0
+ ip address 10.7.10.1 255.255.255.0
+ no shutdown
+
+interface e0/1
+ ip address 10.7.11.1 255.255.255.0
+ no shutdown
+
+! Interface vers R9
+interface s2/0
+ ip address 10.7.9.7 255.255.255.0
+ no shutdown
+
+! OSPF
+router ospf 1
+ network 10.7.10.0 0.0.0.255 area 0
+ network 10.7.11.0 0.0.0.255 area 0
+ network 10.7.9.0 0.0.0.255 area 0
+
+end
+write memory
