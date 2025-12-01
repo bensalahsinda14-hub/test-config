@@ -1,0 +1,11 @@
+enable
+configure terminal
+vlan 10
+ name LAN10
+interface e0/0
+ switchport mode access
+ switchport access vlan 10
+interface e0/1
+ switchport mode trunk
+end
+write memory
