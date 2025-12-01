@@ -1,0 +1,28 @@
+enable
+configure terminal
+
+! Interfaces vers switch
+interface e0/0
+ no shutdown
+interface e0/2
+ no shutdown
+
+! Interface vers R9
+interface s2/0
+ ip address 10.4.9.4 255.255.255.0
+ no shutdown
+
+! VLANs
+vlan 10
+ name LAN10
+vlan 20
+ name LAN20
+
+! Trunk sur e0/0 vers SW1 et e0/1 vers SW2
+interface e0/0
+ switchport mode trunk
+interface e0/2
+ switchport mode trunk
+
+end
+write memory
