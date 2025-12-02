@@ -1,0 +1,47 @@
+hostname R9
+no ip domain-lookup
+
+! ==========================
+!        INTERFACES
+! ==========================
+
+interface s2/0
+ ip address 10.0.70.1 255.255.255.252
+ no shutdown
+
+interface s2/1
+ ip address 10.0.90.1 255.255.255.252   ! vers R15
+ ip access-group 100 in
+ no shutdown
+
+interface s2/2
+ ip address 10.0.40.1 255.255.255.252   ! vers R4
+ no shutdown
+
+interface s2/3
+ ip address 10.0.18.1 255.255.255.252   ! vers R18
+ no shutdown
+
+
+! ==========================
+!            ACL
+! ==========================
+! Bloquer VLAN20 du MLS vers le réseau de R15
+! (exemple : PCs sur R15 = 192.168.15.0/24)
+
+access-list 100 deny ip 192.168.20.0 0.0.0.255 192.168.15.0 0.0.0.255
+access-list 100 permit ip any any
+
+
+! ==========================
+!         ROUTAGE
+! ==========================
+
+router ospf 1
+ router-id 9.9.9.9
+ network 10.0.70.0 0.0.0.3 area 0
+ network 10.0.90.0 0.0.0.3 area 0
+ network 10.0.40.0 0.0.0.3 area 0
+ network 10.0.18.0 0.0.0.3 area 0
+
+end
