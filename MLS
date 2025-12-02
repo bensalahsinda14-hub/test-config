@@ -1,0 +1,60 @@
+hostname MLS
+no ip domain-lookup
+ip routing
+
+! ==========================
+!           VLANs
+! ==========================
+
+vlan 10
+ name USERS1
+
+vlan 20
+ name USERS2
+
+! ==========================
+!   INTERFACES VLAN (SVI)
+! ==========================
+
+interface vlan 10
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+
+interface vlan 20
+ ip address 192.168.20.1 255.255.255.0
+ no shutdown
+
+! ==========================
+!      LIAISONS TRUNK
+! ==========================
+
+interface e0/0
+ switchport mode trunk
+ no shutdown
+
+interface e0/1
+ switchport mode trunk
+ no shutdown
+
+
+! ==========================
+!     LIEN VERS R4 (L3)
+! ==========================
+
+interface e0/2
+ no switchport
+ ip address 10.0.4.2 255.255.255.252
+ no shutdown
+
+
+! ==========================
+!          ROUTAGE
+! ==========================
+
+router ospf 1
+ router-id 4.4.4.4
+ network 192.168.10.0 0.0.0.255 area 0
+ network 192.168.20.0 0.0.0.255 area 0
+ network 10.0.4.0 0.0.0.3 area 0
+
+end
