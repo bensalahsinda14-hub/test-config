@@ -45,3 +45,22 @@ router ospf 1
  network 10.0.18.0 0.0.0.3 area 0
 
 end
+enable
+conf t 
+interface s2/2
+ ip nat outside
+
+interface g0/0
+ ip nat inside
+
+ip nat inside source list 1 interface s2/2 overload
+
+access-list 1 permit 192.168.0.0 0.0.255.255
+snmp-server group MONITOR v3 priv
+snmp-server user admin MONITOR v3 auth sha Auth123 priv aes 256 Pr1vKey
+snmp-server host 192.168.50.10 version 3 priv admin
+no service tcp-small-servers
+no service udp-small-servers
+
+
+
