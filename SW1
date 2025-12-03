@@ -1,5 +1,6 @@
 enable
 configure terminal
+hostname switch1
 vlan 10
  name LAN10
 interface e0/0
